@@ -1,0 +1,17 @@
+name: Deploy Express API to Koyeb
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Trigger Koyeb Redeploy
+        run: |
+          curl -X POST https://app.koyeb.com/v1/services/YOUR_SERVICE_ID/redeploy \
+            -H "Authorization: Bearer ${{ secrets.KOYEB_API_TOKEN }}"
