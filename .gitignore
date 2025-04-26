@@ -70,3 +70,5 @@ temp/
 *.psd
 *.ai
 *.sketch
+
+.env
