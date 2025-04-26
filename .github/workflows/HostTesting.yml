@@ -2,8 +2,9 @@ name: Deploy Express API to Koyeb
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  workflow_dispatch:
+
 
 jobs:
   deploy:
@@ -13,5 +14,12 @@ jobs:
       
       - name: Trigger Koyeb Redeploy
         run: |
-          curl -X POST https://app.koyeb.com/v1/services/YOUR_SERVICE_ID/redeploy \
+          curl -X POST https://app.koyeb.com/v1/services/abcdef1234567890/redeploy \
             -H "Authorization: Bearer ${{ secrets.KOYEB_API_TOKEN }}"
+
+      - name: Wait for Koyeb to restart
+        run: sleep 30
+
+      - name: Test API Health
+        run: |
+          curl --fail https://quick-marion-awerddev-c9f60f67.koyeb.app/
